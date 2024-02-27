@@ -13,12 +13,14 @@ export type GetNodeRegistryBody = {
   nodes: Node[];
 };
 
+const registeredNodes: Node[] = [];
+
 export async function launchRegistry() {
   const _registry = express();
   _registry.use(express.json());
   _registry.use(bodyParser.json());
 
-  _user.get("/status", (req, res) => {
+  _registry.get("/status", (req, res) => {
     res.send("live");
   });
 
