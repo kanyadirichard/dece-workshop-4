@@ -36,7 +36,7 @@ export async function launchRegistry() {
     res.status(200).json({ message: `Node ${nodeId} registered successfully.` });
   });
   
-  _registry.get("/status", (req, res) => {
+  _registry.get("/status", (req: Request, res: Response) => {
     res.send("live");
   });
 
