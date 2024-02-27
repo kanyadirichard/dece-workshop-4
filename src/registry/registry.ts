@@ -20,6 +20,22 @@ export async function launchRegistry() {
   _registry.use(express.json());
   _registry.use(bodyParser.json());
 
+  app.post("/registerNode", (req, res) => {
+    const { nodeId, pubKey }: RegisterNodeBody = req.body;
+
+    if (!nodeId || !pubKey) {
+      return res.status(400).json({ error: "Node ID and public key are required." });
+    }
+
+    if (registeredNodes.some(node => node.nodeId === nodeId)) {
+      return res.status(400).json({ error: `Node ${nodeId} is already registered.` });
+    }
+
+    registeredNodes.push({ nodeId, pubKey });
+
+    res.status(200).json({ message: `Node ${nodeId} registered successfully.` });
+  });
+  
   _registry.get("/status", (req, res) => {
     res.send("live");
   });
