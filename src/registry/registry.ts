@@ -20,7 +20,7 @@ export async function launchRegistry() {
   _registry.use(express.json());
   _registry.use(bodyParser.json());
 
-  app.post("/registerNode", (req, res) => {
+  _registry.post("/registerNode", (req: Request, res: Response) => {
     const { nodeId, pubKey }: RegisterNodeBody = req.body;
 
     if (!nodeId || !pubKey) {
