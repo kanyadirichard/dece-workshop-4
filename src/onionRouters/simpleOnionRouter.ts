@@ -4,8 +4,6 @@ import { BASE_ONION_ROUTER_PORT } from "../config";
 
 let lastReceivedEncryptedMessage: string | null = null;
 let lastReceivedDecryptedMessage: string | null = null;
-let lastReceivedMessage: string | null = null;
-let lastSentMessage: string | null = null;
 let lastMessageDestination: number | null = null;
 
 export async function simpleOnionRouter(nodeId: number) {
@@ -27,14 +25,6 @@ export async function simpleOnionRouter(nodeId: number) {
 
   onionRouter.get("/getLastMessageDestination", (req, res) => {
     res.json({ result: lastMessageDestination });
-  });
-
-  onionRouter.get("/getLastReceivedMessage", (req, res) => {
-    res.json({ result: lastReceivedMessage });
-  });
-
-  onionRouter.get("/getLastSentMessage", (req, res) => {
-    res.json({ result: lastSentMessage });
   });
 
   const server = onionRouter.listen(BASE_ONION_ROUTER_PORT + nodeId, () => {
