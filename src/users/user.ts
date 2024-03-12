@@ -1,7 +1,7 @@
 import bodyParser from "body-parser";
 import express from "express";
 import { BASE_USER_PORT } from "../config";
-import userRoutes from "./userRoutes";
+import userRoutes from "./userRoutes"; // added
 
 export type SendMessageBody = {
   message: string;
@@ -13,6 +13,8 @@ export async function user(userId: number) {
   _user.use(express.json());
   _user.use(bodyParser.json());
 
+  _user.use("/", userRoutes); // added
+  
   _user.get("/status", (req, res) => {
     res.send("live");
   });
