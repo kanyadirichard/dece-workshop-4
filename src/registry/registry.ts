@@ -18,7 +18,7 @@ const registeredNodes: Node[] = [];
 export async function launchRegistry() {
   const _registry = express();
   _registry.use(express.json());
-  _registry.use(bodyParser.json());
+
 
   _registry.post("/registerNode", (req: Request, res: Response) => {
     const { nodeId, pubKey }: RegisterNodeBody = req.body;
