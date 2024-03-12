@@ -1,7 +1,7 @@
 import bodyParser from "body-parser";
 import express, { Request, Response } from "express";
 import { REGISTRY_PORT } from "../config";
-import { generateKeyPair } from "./cryptoFunctions";
+import { generateKeyPair } from "../crypto";
 
 export type Node = { nodeId: number; pubKey: string; privateKey: string };
 
@@ -38,7 +38,7 @@ export async function launchRegistry() {
     return res.status(200).json({ message: `Node ${nodeId} registered successfully.` });
   });
 
-  registry.get("/getPrivateKey/:nodeId", (req: Request, res: Response) => {
+  _registry.get("/getPrivateKey/:nodeId", (req: Request, res: Response) => {
     const nodeId: number = parseInt(req.params.nodeId);
 
     // Find the node by ID
