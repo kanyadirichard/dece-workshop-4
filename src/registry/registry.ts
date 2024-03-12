@@ -18,7 +18,7 @@ const registeredNodes: Node[] = [];
 export async function launchRegistry() {
   const _registry = express();
   _registry.use(express.json());
-
+  _registry.use(bodyParser.json());
 
   _registry.post("/registerNode", (req: Request, res: Response) => {
     const { nodeId, pubKey }: RegisterNodeBody = req.body;
@@ -33,7 +33,7 @@ export async function launchRegistry() {
 
     registeredNodes.push({ nodeId, pubKey });
 
-    res.status(200).json({ message: `Node ${nodeId} registered successfully.` });
+    return res.status(200).json({ message: `Node ${nodeId} registered successfully.` });
   });
   
   _registry.get("/status", (req: Request, res: Response) => {
