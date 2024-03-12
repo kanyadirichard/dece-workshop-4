@@ -1,6 +1,7 @@
 import bodyParser from "body-parser";
 import express from "express";
 import { BASE_USER_PORT } from "../config";
+import userRoutes from "./userRoutes";
 
 export type SendMessageBody = {
   message: string;
