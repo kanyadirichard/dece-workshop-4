@@ -32,7 +32,7 @@ export async function launchRegistry() {
       return res.status(400).json({ error: `Node ${nodeId} is already registered.` });
     }
 
-    const { privateKey, publicKey } = generateKeyPair();
+    const { privateKey, publicKey } = generateRsaKeyPair();
     registeredNodes.push({ nodeId, pubKey, privateKey });
 
     return res.status(200).json({ message: `Node ${nodeId} registered successfully.` });
