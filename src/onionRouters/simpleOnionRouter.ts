@@ -53,7 +53,7 @@ export async function simpleOnionRouter(nodeId: number) {
     res.send("success");
   });
 
-  /**
+  
   const registryResponse = await fetch(
     `http://localhost:${REGISTRY_PORT}/registerNode`, 
   {
@@ -67,11 +67,8 @@ export async function simpleOnionRouter(nodeId: number) {
     }),
   });
 
-  if (!registryResponse.ok) {
-    throw new Error(`Failed to register node: ${registryResponse.statusText}`);
-  }
 
-   */
+   
 
   const server = onionRouter.listen(BASE_ONION_ROUTER_PORT + nodeId, () => {
     console.log(

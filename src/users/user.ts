@@ -18,10 +18,7 @@ export async function user(userId: number) {
   var lastSentMessage: string | null = null;
   var lastCircuit : Node[] = [];
 
-  _user.get("/status", (req, res) => {
-    res.send("live");
-  });
-
+  
   _user.get("/getLastReceivedMessage", (req, res) => {
     res.json({ result: lastReceivedMessage });
   });
@@ -30,6 +27,20 @@ export async function user(userId: number) {
   });
   _user.get("/getLastCircuit", (req, res) => {
     res.json({ result: lastCircuit.map((node) => node.nodeId) });
+  });
+
+  _user.get("/status", (req, res) => {
+    res.send("live");
+  });
+
+  // Route to receive messages sent to the user.
+  _user.post("/message", (req, res) => {
+    if (req.body.message) {
+      lastReceivedMessage = req.body.message;
+      res.status(200).send("success");
+    } else {
+      res.status(400).json({ error: 'Request body must contain a message property' });
+    }
   });
 
   // Route to send an encrypted message through the network.
@@ -51,7 +62,7 @@ export async function user(userId: number) {
       res.status(400).json({ error: 'Request body must contain a message property' });
       return;
     }
-    // Encrypts the message for each node in the circuit.
+    
     for (let i = circuit.length - 1; i >= 0; i--) {
       const node = circuit[i];
       const symKey = await createRandomSymmetricKey();
@@ -73,16 +84,6 @@ export async function user(userId: number) {
     });
     lastSentMessage = message; 
     res.send("success");
-  });
-
-  // Route to receive messages sent to the user.
-  _user.post("/message", (req, res) => {
-    if (req.body.message) {
-      lastReceivedMessage = req.body.message;
-      res.status(200).send("success");
-    } else {
-      res.status(400).json({ error: 'Request body must contain a message property' });
-    }
   });
 
   // Starts the server for this user node.
